@@ -1,8 +1,10 @@
+import {watchActionIcons} from './action-icons.mjs';
 import { createClient } from '@supabase/supabase-js';
 import { WorkspaceSync } from './sync.mjs';
 import * as ProjectReport from './project-report.mjs';
 import {pickProfile} from './profiles.mjs';
 window.ProjectReport=ProjectReport;
+watchActionIcons();
 
 const url = SUPABASE_URL;
 const key = SUPABASE_PUBLISHABLE_KEY;
@@ -141,10 +143,12 @@ async function connect() {
   const connection=document.createElement('div');connection.id='connection';
   const status=document.createElement('span');status.setAttribute('role','status');status.textContent='Connected';connection.append(status);
   button(connection,'Sign out',async()=>{
+    if(document.querySelector('form[data-report-dirty="true"]')&&!confirm('Sign out without saving your report edits?'))return;
     if(sync?.pending){await sync.tick();if(sync.pending)return}
     const {error}=await client.auth.signOut();if(error){fail(error);return}location.reload();
   });
   button(connection,'Switch profile',async()=>{
+    if(document.querySelector('form[data-report-dirty="true"]')&&!confirm('Switch profile without saving your report edits?'))return;
     try{
       await workspace.flush();
       app.inert=true;

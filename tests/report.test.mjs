@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {reportFor,testingProgress,countdown,dashboard,makePdf} from '../src/project-report.mjs';
+import {reportFor,testingProgress,countdown,dashboard,makePdf,createReportSnapshot,snapshotIsStale,recordsView,reviewEditor} from '../src/project-report.mjs';
 import {exampleProject} from './report-fixture.mjs';
 test('old projects get reporting defaults without changing their saved data',()=>{
  const p={target:'2026-11-01',status:'Planning'};const r=reportFor(p);
@@ -31,7 +31,21 @@ test('long decision lists and notes paginate rather than being truncated',()=>{
 test('linked report uses only its project tasks and live delivery records',()=>{
  const p={id:'p',target:'2026-12-01',statusReport:{testing:{pass:99},decisions:[{title:'Old'}]},deliveryRecords:{tests:[{result:'pass'},{result:'blocked'},{result:'remaining'}],decisions:[{title:'Approve',status:'Done'}],notes:[{title:'Architecture',text:'Service A'}],milestones:[{title:'UAT',due:'2026-11-01',status:'Planned'}]}};
  const tasks=[{project:'p',title:'Build',status:'done'},{project:'p',title:'Resolve API',status:'blocked',blockedReason:'Await access',due:'2026-10-30'},{project:'other',title:'Private',status:'todo'}];
- const r=reportFor(p,tasks);assert.equal(r.testing.pass,1);assert.equal(r.testing.blocked,1);assert.equal(r.stages.length,3);assert.match(r.nextSteps,/Await access/);assert.doesNotMatch(r.nextSteps,/Private|Build/);assert.equal(r.decisions[0].title,'Approve');assert.equal(r.notes[0].text,'Service A');
+ const r=reportFor(p,tasks);assert.equal(r.testing.pass,1);assert.equal(r.testing.blocked,1);assert.equal(r.stages.length,1);assert.equal(r.taskDetails.length,2);assert.match(r.nextSteps,/Await access/);assert.doesNotMatch(r.nextSteps,/Private|Build/);assert.equal(r.decisions[0].title,'Approve');assert.equal(r.notes[0].text,'Service A');
  tasks[1].status='done';assert.doesNotMatch(reportFor(p,tasks).nextSteps,/Resolve API/);assert.equal(p.statusReport.testing.pass,99);
  const pdf=makePdf(p,{tasks});assert.ok(pdf.getNumberOfPages()>0);
+});
+
+test('reviewed snapshot stays immutable and PDF excludes later live changes',()=>{
+ const p={id:'p',name:'Alpha',lead:'s',target:'2026-12-01',status:'On track',statusReport:{summary:'REVIEWED_SUMMARY',asOf:'2026-10-20'},deliveryRecords:{tests:[{result:'pass'}],decisions:[],notes:[],milestones:[]}};
+ const tasks=[{id:'1',project:'p',title:'REVIEWED_TASK',status:'todo',due:'2026-10-25'}];
+ const review=createReportSnapshot(p,tasks,{reviewedBy:'Sarah',now:new Date('2026-10-20T02:00:00Z')});p.reportSnapshots=[review];assert.equal(snapshotIsStale(p,tasks),false);
+ tasks[0].title='LIVE_CHANGED_TASK';p.statusReport.summary='LIVE_CHANGED_SUMMARY';p.deliveryRecords.tests[0].result='fail';
+ assert.equal(snapshotIsStale(p,tasks),true);assert.equal(review.report.testing.pass,1);assert.equal(review.report.summary,'REVIEWED_SUMMARY');assert.match(dashboard(p,tasks),/Project changed since/);
+ const pdf=makePdf(p,{tasks,now:new Date('2027-01-01')}).output();assert.match(pdf,/REVIEWED_SUMMARY/);assert.doesNotMatch(pdf,/LIVE_CHANGED_SUMMARY|LIVE_CHANGED_TASK/);
+});
+test('missing testing and not applicable are distinct and preparation uses clear steps',()=>{
+ const p={id:'p',deliveryRecords:{tests:[],testsMode:'not-applicable',decisions:[],notes:[],milestones:[]}};
+ assert.equal(reportFor(p).testingState,'not-applicable');assert.match(dashboard(p),/Testing not applicable/);p.deliveryRecords.testsMode='applicable';assert.equal(reportFor(p).testingState,'not-recorded');assert.match(dashboard(p),/No tests recorded/);
+ assert.match(recordsView(p),/Save records &amp; continue|Save records & continue/);assert.match(reviewEditor(p),/Save reviewed report & preview/);
 });

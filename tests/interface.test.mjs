@@ -7,7 +7,7 @@ import {webcrypto} from 'node:crypto';
 const html=await readFile(new URL('../src/index.html',import.meta.url),'utf8');
 const inline=[...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).find(s=>s.includes('const PAGES='));
 function interfaceFixture(){
-  const window={};
+  const window={addEventListener:()=>{}};
   const script=inline.slice(0,inline.indexOf('/* ---------- boot ---------- */'))+`
     USERS.push({id:'member',name:'Test Member',title:'Engineer',role:'Member',hue:180});ME=USERS[0];
     window.unit={PAGES,S,PROJECTS,TASKS,USERS,createItem,projOpts,selectProfile:id=>{ME=user(id)}};

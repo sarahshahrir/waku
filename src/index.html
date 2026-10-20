@@ -302,6 +302,47 @@ main{padding:32px 36px 72px}.wrap{max-width:1240px}
 #side #connection button:last-of-type{order:1}
 .collapsed #connection [role="status"]{display:none}
 @media(max-width:900px){#side{padding-bottom:12px}#side #connection [role="status"]{display:none}}
+
+.report-guide{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:14px 0 22px;color:var(--ink2);font-size:12px}.report-guide b{color:var(--ink)}
+.report-source{border-left:3px solid var(--accent);background:var(--sunk);padding:14px 16px;margin:16px 0 24px;font-size:12px}.report-source p{margin:5px 0 0;color:var(--ink2);line-height:1.6}
+.report-step{border-top:1px solid var(--line)}.report-step:last-of-type{border-bottom:1px solid var(--line)}.report-step summary{display:flex;align-items:center;gap:12px;cursor:pointer;padding:18px 0;list-style:none}.report-step summary::after{content:'+';margin-left:auto;font-size:18px;color:var(--ink2)}.report-step[open] summary::after{content:'−'}.report-step summary::-webkit-details-marker{display:none}.report-step-number{border:1px solid var(--line2);border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:11px;color:var(--ink2)}.report-step-body{padding:0 0 24px 36px}.report-step-body>.hint{margin-top:0;max-width:680px}.report-step .report-edit-row{background:var(--surface);padding:18px;margin:16px 0}.report-step .l{display:block;font-size:12px;margin:12px 0 5px;color:var(--ink2)}.report-step .fld{display:block;margin-top:5px;color:var(--ink)}
+.report-save{position:sticky;bottom:-1px;display:flex;align-items:center;justify-content:flex-end;gap:14px;padding:16px 0;background:var(--surface);border-top:1px solid var(--line);margin-top:20px;z-index:1}
+#modal form[data-form="reportreview"]{max-height:72vh;overflow:auto;padding-right:8px}#modal form[data-form="reportreview"] textarea{min-height:180px}
+@media(max-width:600px){.report-step-body{padding-left:0}.report-guide{gap:10px}.report-save{flex-wrap:wrap}.report-step summary .hint{font-size:10px}}
+.action-icon-only{width:32px;min-width:32px;padding:0!important;justify-content:center}.action-icon-only.danger{background:transparent;border-color:transparent}.action-icon-only.danger:hover{background:var(--red-soft);border-color:var(--red-soft)}
+.btn .i{width:15px;height:15px}.btn[aria-busy="true"]{opacity:.6}
+
+/* All task toolbar controls share a 36px baseline. */
+.toolbar{gap:8px;align-items:center}
+.toolbar .seg{height:36px;box-sizing:border-box}.toolbar .seg button{height:34px;padding:0 14px;font-size:12px}
+.toolbar .sel.plain select,.toolbar .sel.plain.sm select{height:36px;min-width:156px;width:100%;padding:0 32px 0 12px;font-size:12px;line-height:normal;border:1px solid var(--line2);border-radius:5px;background:var(--surface)}
+.toolbar .sel.plain::after{content:'';position:absolute;right:13px;top:50%;width:6px;height:6px;border-right:1.5px solid var(--ink2);border-bottom:1.5px solid var(--ink2);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.toolbar .btn.sm{height:36px}
+.filter-toolbar{padding:12px 0 16px;border-top:1px solid var(--line);margin-top:16px}
+.filter-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+.filter-label{display:inline-flex;gap:7px;align-items:center;font-size:12px;font-weight:500;color:var(--ink2);margin-right:8px;min-height:36px}
+.filter-control{width:160px}.toolbar .filter-control.is-filtered select{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:500}
+@media(max-width:600px){.filter-controls{width:100%}.filter-label{width:100%;min-height:24px}.filter-control{flex:1 1 140px}.toolbar .sel.plain select{min-width:0}.toolbar>.sel.plain{flex:1;min-width:140px}}
+
+/* Color palettes remain independent of day/night appearance. */
+:root[data-palette="strawberry"]{--bg:#fff8fa;--surface:#fffefe;--sunk:#f9edf1;--line:#ead7df;--line2:#d8bac7;--ink:#303c2d;--ink2:#656c59;--ink3:#7d786f;--accent:#52743f;--accent-ink:#fff;--accent-soft:#edf3e5;--green:#52743f;--green-soft:#edf3e5;--blue:#957086;--blue-soft:#f5e8f0}
+:root[data-palette="lavender"]{--bg:#faf9ff;--surface:#fff;--sunk:#eeedf8;--line:#dfdeef;--line2:#c8c5e1;--ink:#2e3047;--ink2:#63657e;--ink3:#797b94;--accent:#6562a5;--accent-ink:#fff;--accent-soft:#eeecfa;--blue:#5279ae;--blue-soft:#e8f0fb}
+:root[data-theme="dark"][data-palette="strawberry"]{--bg:#191b17;--surface:#22251e;--sunk:#303329;--line:#3c4133;--line2:#565d48;--ink:#f3e9e7;--ink2:#c1c3af;--ink3:#a2a18f;--accent:#b4cc91;--accent-ink:#202b17;--accent-soft:#35432a;--green:#b4cc91;--green-soft:#35432a;--blue:#e7a6bc;--blue-soft:#49313c}
+:root[data-theme="dark"][data-palette="lavender"]{--bg:#191923;--surface:#232330;--sunk:#2e2e40;--line:#3c3c51;--line2:#565670;--ink:#eeedf9;--ink2:#b7b6d0;--ink3:#9897b4;--accent:#b9b3ed;--accent-ink:#25223e;--accent-soft:#38324f;--blue:#9cbce6;--blue-soft:#293b54}
+@media(prefers-color-scheme:dark){
+:root:not([data-theme="light"])[data-palette="strawberry"]{--bg:#191b17;--surface:#22251e;--sunk:#303329;--line:#3c4133;--line2:#565d48;--ink:#f3e9e7;--ink2:#c1c3af;--ink3:#a2a18f;--accent:#b4cc91;--accent-ink:#202b17;--accent-soft:#35432a;--green:#b4cc91;--green-soft:#35432a;--blue:#e7a6bc;--blue-soft:#49313c}
+:root:not([data-theme="light"])[data-palette="lavender"]{--bg:#191923;--surface:#232330;--sunk:#2e2e40;--line:#3c3c51;--line2:#565670;--ink:#eeedf9;--ink2:#b7b6d0;--ink3:#9897b4;--accent:#b9b3ed;--accent-ink:#25223e;--accent-soft:#38324f;--blue:#9cbce6;--blue-soft:#293b54}}
+:root[data-palette="strawberry"] #side{background:color-mix(in srgb,var(--surface) 80%,#d991ac 20%)}
+:root[data-palette="strawberry"] .nav button.on{background:var(--accent-soft);color:var(--accent)}
+#palette-toggle[aria-pressed="true"]{background:var(--accent-soft);outline:1px solid var(--line2)}
+.palette-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding:18px}
+.palette-option{background:var(--surface);border:1px solid var(--line2);border-radius:6px;padding:16px;text-align:left;display:grid;gap:8px;color:var(--ink)}.palette-option:hover,.palette-option.selected{border-color:var(--accent);background:var(--accent-soft)}.palette-option.selected{box-shadow:0 0 0 1px var(--accent)}.palette-option strong{font-size:12px;font-weight:500}.palette-option small{font-size:11px;color:var(--ink2)}.palette-swatches{display:flex;gap:5px}.palette-swatches i{width:24px;height:24px;border-radius:50%;border:1px solid #0001;background:#e7e8e8}.palette-swatches i+i{background:#527369}.palette-swatches.strawberry i{background:#efb3c7}.palette-swatches.strawberry i+i{background:#7b965d}.palette-swatches.lavender i{background:#c7b9e9}.palette-swatches.lavender i+i{background:#a5c7e8}
+
+
+.report-alert{padding:16px 20px;border:1px solid var(--amber);border-radius:6px;background:var(--amber-soft);color:var(--ink);margin-bottom:20px}.report-alert p{margin:6px 0 0;font-size:12px}
+.report-support summary{cursor:pointer;font-weight:500;font-size:13px}.report-source-link{background:none;border:0;padding:8px 0;color:var(--accent);font-size:11px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}.report-table-wrap{overflow-x:auto}.report-guide [aria-current="step"]{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:6px}
+.report-history{display:flex;align-items:center;gap:12px;font-size:12px;margin:0 0 20px}.report-history select{width:auto;max-width:100%;font-size:12px}
+#report-leave{position:fixed;inset:0;z-index:11000;background:#0007;display:grid;place-items:center;padding:24px}#report-leave section{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;max-width:440px;color:var(--ink)}#report-leave p{color:var(--ink2)}
 </style>
 </head>
 <body>
@@ -317,6 +358,7 @@ main{padding:32px 36px 72px}.wrap{max-width:1240px}
         <div class="results" id="results" hidden></div>
       </div>
       <button class="btn primary" data-a="newtask"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="hide-sm">New task</span></button>
+      <button class="iconbtn" id="palette-toggle" data-a="palette" data-palette="strawberry" aria-label="Strawberry matcha theme" title="Strawberry matcha theme" aria-pressed="false"><svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9C2 14 8 22 12 22s10-8 7-13c-2-3-5-2-7-1-2-1-5-2-7 1Z" fill="#d96b8c"/><path d="m12 9-6-5 5 1 1-4 2 4 5-1-5 5Z" fill="#68864c"/><path d="m8 12 1 1m6-1 1 1m-5 2 1 1m-1 2 1 1" stroke="#fff5d7" stroke-width="1.5" stroke-linecap="round"/></svg></button>
       <button class="iconbtn" id="theme-toggle" data-a="toggletheme" aria-label="Switch to day mode" title="Switch to day mode"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
       <button class="iconbtn" data-a="bell" aria-label="Notifications" id="bell"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/></svg></button>
       <button class="iconbtn" data-a="nav" data-p="profile" aria-label="Profile"><span class="avatar" id="meav"></span></button>
@@ -387,7 +429,7 @@ const reqs=()=>TASKS.filter(t=>!isWork(t));
 const isOver=t=>t.due&&t.status!=='done'&&t.due<todayStr;
 /* ---------- state ---------- */
 const S={page:'home',pid:null,tab:'overview',view:'list',group:'status',sort:'due',f:{status:'',priority:'',project:'',due:''},pf:{status:'',priority:'',assignee:'',sort:'due'},sel:new Set(),open:null,fresh:false,inbox:'untriaged',teamF:{member:'',project:''},repF:{project:'',range:30},side:false,saveTxt:''};
-try{const th=localStorage.getItem('wb-theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
+try{const th=localStorage.getItem('wb-theme');if(th)document.documentElement.dataset.theme=th;const palette=localStorage.getItem('wb-palette');if(['strawberry','lavender'].includes(palette))document.documentElement.dataset.palette=palette}catch(e){}
 /* ---------- local mutations; persisted by WorkspaceSync ---------- */
 function hist(t,who,text){t.history.push({ts:Date.now(),who,text});t.updated=Date.now()}
 function valLabel(field,v){if(field==='status')return sLabel[v];if(field==='priority')return pLabel[v];if(field==='assignee')return v?user(v).name:'nobody';if(field==='project')return v?proj(v).name:'no project';if(field==='due')return v?dueLabel(v):'no date';return v||'empty'}
@@ -495,8 +537,8 @@ PAGES.home=()=>{
  </div></div></div>`;
 };
 function filtersBar(f,key,withProject,withAssignee){
- const sel=(k,label,opts)=>`<span class="sel plain sm"><select data-filter="${key}.${k}" aria-label="${label}">${[['',label],...opts].map(o=>`<option value="${esc(o[0])}"${f[k]===o[0]?' selected':''}>${esc(o[1])}</option>`).join('')}</select></span>`;
- return sel('status','Any status',STATUS)+sel('priority','Any priority',PRI.slice(0,4))+(withProject?sel('project','Any project',PROJECTS.map(p=>[p.id,p.name])):'')+(withAssignee?sel('assignee','Anyone',USERS.map(u=>[u.id,u.name])):'')+(f.due!==undefined?sel('due','Any due date',[['overdue','Overdue'],['soon','Due in 7 days'],['none','No date']]):'');
+ const sel=(k,label,opts)=>`<span class="sel plain sm filter-control ${f[k]?'is-filtered':''}"><select data-filter="${key}.${k}" aria-label="${label}">${[['',label],...opts].map(o=>`<option value="${esc(o[0])}"${f[k]===o[0]?' selected':''}>${esc(o[1])}</option>`).join('')}</select></span>`;
+ return `<div class="filter-controls" role="group" aria-label="Task filters"><span class="filter-label"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"/></svg>Filters</span>`+sel('status','Any status',STATUS)+sel('priority','Any priority',PRI.slice(0,4))+(withProject?sel('project','Any project',PROJECTS.map(p=>[p.id,p.name])):'')+(withAssignee?sel('assignee','Anyone',USERS.map(u=>[u.id,u.name])):'')+(f.due!==undefined?sel('due','Any due date',[['overdue','Overdue'],['soon','Due in 7 days'],['none','No date']]):'')+'</div>';
 }
 function boardHTML(list,ctx){
  return `<div class="board">${STATUS.map(([k,l])=>{const items=sortL(list.filter(t=>t.status===k),'priority');return `<div class="col" data-drop="${k}"><div class="ch"><span class="sel s-${k}" style="width:10px"><i style="left:0"></i></span>${l}<span class="n">${items.length}</span></div>
@@ -514,7 +556,7 @@ PAGES.tasks=()=>{
  <div class="toolbar"><div class="seg"><button class="${S.view==='list'?'on':''}" data-a="view" data-v="list">${ico('list')}List</button><button class="${S.view==='board'?'on':''}" data-a="view" data-v="board">${ico('board')}Board</button></div>
   ${S.view==='list'?`<span class="sel plain sm"><select data-opt="group" aria-label="Group by">${[['status','Group: Status'],['project','Group: Project'],['priority','Group: Priority'],['due','Group: Due date']].map(o=>`<option value="${o[0]}"${S.group===o[0]?' selected':''}>${o[1]}</option>`).join('')}</select></span>`:''}
   <span class="sel plain sm"><select data-opt="sort" aria-label="Sort by">${[['due','Sort: Due date'],['priority','Sort: Priority'],['created','Sort: Newest'],['title','Sort: Title']].map(o=>`<option value="${o[0]}"${S.sort===o[0]?' selected':''}>${o[1]}</option>`).join('')}</select></span>
-  ${filtersBar(S.f,'f',true,false)}${filt?`<button class="btn sm" data-a="clearf">Clear filters</button>`:''}</div>
+  </div><div class="toolbar filter-toolbar">${filtersBar(S.f,'f',true,false)}${filt?`<button class="btn sm" data-a="clearf">Clear filters</button>`:''}</div>
  <input class="quick" data-quick="list" placeholder="Add a task and press Enter. Try: Review limits tomorrow !high" aria-label="Quick add task">
  ${S.view==='board'?boardHTML(list,{}):groups.length?groups.map(g=>`<div class="group"><div class="gh">${S.group==='status'?`<span class="sel s-${g.key}" style="width:10px"><i style="left:0"></i></span>`:''}${esc(g.label)}<span class="n">${g.items.length}</span></div><div class="list">${g.items.map(t=>taskRow(t)).join('')}</div></div>`).join(''):`<div class="list">${empty(filt?'No tasks match these filters':'Nothing assigned to you','Add a task above, or clear the filters to see everything.',filt?'<button class="btn" data-a="clearf">Clear filters</button>':'')}</div>`}</div>`;
 };
@@ -541,8 +583,9 @@ PAGES.projects=()=>`<div class="wrap"><div class="pagehead"><div><h2>Projects</h
 PAGES.project=()=>{
  const p=proj(S.pid);const ts=work().filter(t=>t.project===p.id);
  const head=`<div class="pagehead"><div><div class="hint" style="margin-bottom:4px"><button style="border:0;background:none;padding:0;color:var(--accent)" data-a="nav" data-p="projects">Projects</button> / ${p.id}</div><h2>${esc(p.name)}</h2></div><span class="tag ${p.status==='At risk'?'amber':p.status==='On track'?'green':''}">${p.status}</span><span class="spacer"></span><button class="btn primary" data-a="newtask" data-project="${p.id}">${ico('plus')}Add task</button></div>
- <div class="tabs">${[['overview','Overview'],['status','Status report'],['records','Delivery records'],['board','Board'],['list','List']].map(([k,l])=>`<button class="${S.tab===k?'on':''}" data-a="ptab" data-t="${k}">${l}</button>`).join('')}</div>`;
- if(S.tab==='status')return `<div class="wrap">${head}${window.ProjectReport.dashboard(p,TASKS)}</div>`;
+ <div class="tabs">${[['overview','Overview'],['status','Status report'],['records','Delivery records'],['board','Board'],['list','List']].map(([k,l])=>`<button class="${S.tab===k||(S.tab==='prepare'&&k==='status')?'on':''}" data-a="ptab" data-t="${k}">${l}</button>`).join('')}</div>`;
+ if(S.tab==='status')return `<div class="wrap">${head}${window.ProjectReport.dashboard(p,TASKS,{snapshotId:S.reportSnapshotId})}</div>`;
+ if(S.tab==='prepare')return `<div class="wrap">${head}${window.ProjectReport.preparationHeader(S.reportStep||'records')}${S.reportStep==='review'?'<section class="panel-card report-body"><button class="btn sm" data-a="reviewback">Back to records</button>'+window.ProjectReport.reviewEditor(p,window.ProjectReport.draftSummary(p,TASKS))+'</section>':window.ProjectReport.recordsView(p)}</div>`;
  if(S.tab==='records')return `<div class="wrap">${head}${window.ProjectReport.recordsView(p)}</div>`;
  if(S.tab==='board')return `<div class="wrap" style="max-width:1400px">${head}${boardHTML(ts,{project:p.id})}</div>`;
  if(S.tab==='list'){
@@ -602,13 +645,16 @@ PAGES.reports=()=>{
 };
 PAGES.settings=()=>`<div class="wrap" style="max-width:720px"><div class="pagehead"><div><h2>Settings</h2></div></div>
  <section class="panel-card"><h3>Appearance</h3><div style="padding:14px 16px;display:flex;gap:8px;align-items:center">Theme <div class="seg">${[['light','Day'],['dark','Night']].map(([k,l])=>`<button class="${currentTheme()===k?'on':''}" data-a="theme" data-t="${k}">${l}</button>`).join('')}</div></div></section>
+ <section class="panel-card" style="margin-top:16px"><h3>Color palette</h3><div class="palette-options">${[['classic','Classic','Neutral surfaces · forest accents'],['strawberry','🍓 Strawberry matcha','Soft pink · matcha green'],['lavender','Lavender blue','Lilac · soft blue']].map(([key,label,description])=>`<button class="palette-option ${currentPalette()===key?'selected':''}" data-a="palette" data-palette="${key}" aria-pressed="${currentPalette()===key}"><span class="palette-swatches ${key}" aria-hidden="true"><i></i><i></i></span><strong>${label}</strong><small>${description}</small></button>`).join('')}</div><p class="hint" style="padding:0 18px 16px;margin:0">Each palette works in day and night mode. Your choice is saved on this browser.</p></section>
  <section class="panel-card" style="margin-top:16px"><h3>Workspace</h3><div style="padding:14px 16px;color:var(--ink2)">Log in with the shared wakuwaku account, then choose your profile. Profiles identify who is working and share the same project data. Use Switch profile to change person.</div></section></div>`;
 PAGES.profile=()=>`<div class="wrap" style="max-width:720px"><div class="pagehead"><div><h2>Profile</h2></div></div><section class="panel-card"><div style="padding:18px;display:flex;gap:16px;align-items:center">${av(ME.id,'lg')}<div><b>${esc(ME.name)}</b><div class="hint">${esc(ME.title)} · ${esc(ME.role)}</div></div></div></section></div>`;
 /* ---------- chrome ---------- */
 const NAV=[['Workspace',[['home','Home'],['tasks','My Tasks'],['inbox','Inbox'],['projects','Projects'],['team','Team'],['reports','Reports']]]];
 const TITLES={home:'Home',tasks:'My Tasks',inbox:'Inbox',projects:'Projects',project:'Projects',team:'Team',reports:'Reports',settings:'Settings',profile:'Profile'};
+function currentPalette(){return document.documentElement.dataset.palette||'classic'}
+function setPalette(palette){document.documentElement.dataset.palette=palette;try{localStorage.setItem('wb-palette',palette)}catch(e){}$('#palette-toggle').setAttribute('aria-pressed',String(palette==='strawberry'));if(S.page==='settings')renderMain();}
 function currentTheme(){return document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}
-function updateThemeButton(){const b=$('#theme-toggle');const label=currentTheme()==='dark'?'Day mode':'Night mode';b.innerHTML='<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+(currentTheme()==='dark'?'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>':'<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>')+'</svg>';b.setAttribute('aria-label','Switch to '+label.toLowerCase());b.title='Switch to '+label.toLowerCase();}
+function updateThemeButton(){$('#palette-toggle').setAttribute('aria-pressed',String(currentPalette()==='strawberry'));const b=$('#theme-toggle');const label=currentTheme()==='dark'?'Day mode':'Night mode';b.innerHTML='<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+(currentTheme()==='dark'?'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>':'<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>')+'</svg>';b.setAttribute('aria-label','Switch to '+label.toLowerCase());b.title='Switch to '+label.toLowerCase();}
 function setTheme(theme){document.documentElement.dataset.theme=theme;try{localStorage.setItem('wb-theme',theme)}catch(e){}updateThemeButton();if(S.page==='settings')renderMain();}
 function renderSide(){
  const accountControls=document.querySelector('#connection');
@@ -654,7 +700,12 @@ function openTask(id){S.open=id;S.fresh=true;S.saveTxt='';closeSearch();renderDr
 function closeDrawer(){S.open=null;renderDrawer();}
 /* ---------- modals ---------- */
 function modal(html){const m=$('#modal');m.className='on';m.innerHTML=`<div class="scrim" data-a="mclose"></div><div class="dlg" role="dialog" aria-modal="true">${html}</div>`;const f=m.querySelector('[autofocus]');if(f)setTimeout(()=>f.focus(),20)}
-function mclose(){const m=$('#modal');m.className='';m.innerHTML=''}
+function reportCanLeave(proceed){
+ const form=document.querySelector('form[data-report-dirty="true"]');if(!form)return true;if(document.querySelector('#report-leave'))return false;
+ const overlay=document.createElement('div');overlay.id='report-leave';overlay.innerHTML='<section role="dialog" aria-modal="true" aria-labelledby="leave-title"><h3 id="leave-title">Keep your unfinished report?</h3><p>Your latest edits have not been saved.</p><div class="report-tools"><button class="btn primary" type="button" data-leave="stay">Keep editing</button><button class="btn danger" type="button" data-leave="discard">Discard edits & leave</button></div></section>';
+ $('#app').inert=true;overlay.querySelector('[data-leave="stay"]').onclick=()=>{overlay.remove();$('#app').inert=false;form.querySelector('input,textarea,select')?.focus();};overlay.querySelector('[data-leave="discard"]').onclick=()=>{form.dataset.reportDirty='false';overlay.remove();$('#app').inert=false;proceed?.();};overlay.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();overlay.querySelector('[data-leave="stay"]').click();}if(event.key==='Tab'){event.preventDefault();const choices=[...overlay.querySelectorAll('button')];choices[document.activeElement===choices[0]?1:0].focus();}});document.body.append(overlay);overlay.querySelector('button').focus();return false;
+}
+function mclose(){if(!reportCanLeave(()=>mclose()))return;const m=$('#modal');m.className='';m.innerHTML=''}
 const opt=(o,v)=>o.map(x=>`<option value="${esc(x[0])}"${x[0]===v?' selected':''}>${esc(x[1])}</option>`).join('');
 function newTaskModal(pid){
  modal(`<h3>New task</h3><form data-form="task" novalidate><input class="fld" name="title" autofocus placeholder="What needs doing?" aria-label="Title"><div class="err" id="ferr"></div>
@@ -698,6 +749,7 @@ document.addEventListener('click',async e=>{
  if(!e.target.closest('.searchwrap'))$('#results').hidden=true;
  if(!el)return;
  const a=el.dataset.a,id=el.dataset.id;
+ if(['nav','project','ptab','prepareupdate','reviewback','draftreport','editreport','mclose','newtask','newreq','newproj'].includes(a)&&!reportCanLeave(()=>el.click()))return;
  switch(a){
   case 'nav':nav(el.dataset.p);if(el.dataset.p==='inbox')S.inbox=S.inbox;break;
   case 'side':S.side=!S.side;renderSide();break;
@@ -707,17 +759,19 @@ document.addEventListener('click',async e=>{
   case 'newtask':newTaskModal(el.dataset.project||(S.page==='project'?S.pid:''));break;
   case 'newreq':newReqModal();break;
   case 'newproj':newProjModal();break;
+  case 'prepareupdate':S.tab='prepare';S.reportStep='records';renderMain();$('#main').scrollTop=0;break;
+  case 'reviewback':S.reportStep='records';renderMain();$('#main').scrollTop=0;break;
   case 'draftreport':modal(window.ProjectReport.reviewEditor(proj(S.pid),window.ProjectReport.draftSummary(proj(S.pid),TASKS)));$('#modal .dlg').style.width='min(820px,94vw)';break;
-  case 'addrecord':$('#records-'+el.dataset.kind).insertAdjacentHTML('beforeend',window.ProjectReport.recordRow(el.dataset.kind,{},Date.now()));break;
+  case 'addrecord':{el.closest('form').dataset.reportDirty='true';const target=$('#records-'+el.dataset.kind);target.insertAdjacentHTML('beforeend',window.ProjectReport.recordRow(el.dataset.kind,{},Date.now()));target.parentElement.querySelector('.record-empty').hidden=true;target.lastElementChild.querySelector('input,textarea')?.focus();break;}
   case 'editreport':modal(window.ProjectReport.reviewEditor(proj(S.pid)));$('#modal .dlg').style.width='min(820px,94vw)';break;
   case 'addreportdecision':$('#report-decisions').insertAdjacentHTML('beforeend',window.ProjectReport.decisionRow({},Date.now()));break;
   case 'addreportnote':$('#report-notes').insertAdjacentHTML('beforeend',window.ProjectReport.noteRow({},Date.now()));break;
-  case 'removereportrow':el.closest('[data-report-row]').remove();break;
+  case 'removereportrow':el.closest('form').dataset.reportDirty='true';el.closest('[data-report-row]').remove();break;
   case 'exportreport':{
-    const project=proj(S.pid);el.disabled=true;el.textContent='Preparing PDF…';
-    try{await workspace.flush();window.ProjectReport.downloadPdf(project,{lead:user(project.lead).name,tasks:TASKS});}
+    const project=proj(S.pid);const original=el.innerHTML;el.disabled=true;el.setAttribute('aria-busy','true');
+    try{await workspace.flush();window.ProjectReport.downloadPdf(project,{lead:user(project.lead).name,tasks:TASKS,snapshotId:S.reportSnapshotId});}
     catch(error){toast(error.message||'Could not export the report.');}
-    finally{el.disabled=false;el.textContent='Download PDF'}break;
+    finally{el.disabled=false;el.removeAttribute('aria-busy');el.innerHTML=original}break;
   }
   case 'more':{const b=$('#moreBox');b.hidden=!b.hidden;el.textContent=b.hidden?el.textContent.replace('Hide','Add'):'Hide details';break}
   case 'view':S.view=el.dataset.v;renderMain();break;
@@ -727,6 +781,7 @@ document.addEventListener('click',async e=>{
   case 'ptab':S.tab=el.dataset.t;S.sel.clear();renderMain();break;
   case 'inboxtab':S.inbox=el.dataset.t;renderMain();break;
   case 'clearsel':S.sel.clear();renderMain();break;
+  case 'palette':setPalette(el.id==='palette-toggle'&&currentPalette()==='strawberry'?'classic':el.dataset.palette);break;
   case 'theme':setTheme(el.dataset.t);break;
   case 'toggletheme':setTheme(currentTheme()==='dark'?'light':'dark');break;
   case 'triage':setField(id,'triage','triaged',{silent:true,noToast:true});toast(id+' triaged');break;
@@ -750,7 +805,7 @@ document.addEventListener('change',e=>{
   const it=byId(id);if(f==='assignee'&&it.type==='request'&&v&&it.triage==='untriaged'){}
   setField(id,f,v,{silent:S.open===null&&true});if(S.open)renderDrawer();flash();return}
  if(t.dataset.filter){const [k,f]=t.dataset.filter.split('.');S[k][f]=t.value;renderMain();return}
- if(t.dataset.opt){const o=t.dataset.opt;if(o==='group')S.group=t.value;else if(o==='sort')S.sort=t.value;else if(o==='pfsort')S.pf.sort=t.value;renderMain();return}
+ if(t.dataset.opt){const o=t.dataset.opt;if(o==='group')S.group=t.value;else if(o==='sort')S.sort=t.value;else if(o==='pfsort')S.pf.sort=t.value;else if(o==='reportSnapshot')S.reportSnapshotId=t.value;renderMain();return}
  if(t.dataset.sel!==undefined&&t.dataset.sel){t.checked?S.sel.add(t.dataset.sel):S.sel.delete(t.dataset.sel);renderMain();return}
  if(t.dataset.aChange==='relate'&&t.value){const id=t.dataset.id;link(id,t.value);hist(byId(id),ME.id,'linked <b>'+t.value+'</b>');renderDrawer();return}
 });
@@ -775,13 +830,20 @@ document.addEventListener('keydown',e=>{
  if((e.key==='/'&&!typing())||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k')){e.preventDefault();$('#q').focus();return}
  if((e.key==='n'||e.key==='N')&&!typing()&&!e.ctrlKey&&!e.metaKey&&!$('#modal').classList.contains('on')){e.preventDefault();newTaskModal(S.page==='project'?S.pid:'')}
 });
-document.addEventListener('submit',e=>{
+document.addEventListener('input',e=>{const form=e.target.closest('form[data-form="deliveryrecords"],form[data-form="reportreview"]');if(form)form.dataset.reportDirty='true';});
+document.addEventListener('change',e=>{const form=e.target.closest('form[data-form="deliveryrecords"],form[data-form="reportreview"]');if(form)form.dataset.reportDirty='true';});
+window.addEventListener('beforeunload',e=>{if(document.querySelector('form[data-report-dirty="true"]')){e.preventDefault();e.returnValue='';}});
+document.addEventListener('submit',async e=>{
  e.preventDefault();const f=e.target,kind=f.dataset.form,d=Object.fromEntries(new FormData(f));
  if(kind==='deliveryrecords'){
-  try{proj(S.pid).deliveryRecords=window.ProjectReport.readRecords(f);renderAll();toast('Delivery records updated. Saving…');}catch(error){$('#records-error').textContent=error.message;}return;
+  const submit=f.querySelector('[type="submit"]');
+  try{const next=window.ProjectReport.readRecords(f);submit.disabled=true;submit.textContent='Saving records…';proj(S.pid).deliveryRecords=next;await workspace.flush();f.dataset.reportDirty='false';S.tab='prepare';S.reportStep='review';renderAll();$('#main').scrollTop=0;toast('Records saved. Review your narrative next.');}
+  catch(error){$('#records-error').textContent=error.message;submit.disabled=false;submit.textContent='Save records & continue';const missing=[...f.querySelectorAll('[name$=".title"]')].find(el=>!el.value.trim());if(missing){missing.closest('details').open=true;missing.focus();}}return;
  }
  if(kind==='reportreview'){
-  const p=proj(S.pid);p.statusReport={...p.statusReport,status:d.status,goLive:d.goLive,asOf:d.asOf,summary:d.summary,updatedAt:Date.now(),updatedBy:ME.name};p.status=d.status;p.target=d.goLive||null;mclose();renderAll();toast('Reviewed report saved.');return;
+  const button=f.querySelector('button:not([type="button"])');button.disabled=true;button.textContent='Saving reviewed report…';
+  try{const p=proj(S.pid);p.statusReport={...p.statusReport,status:d.status,goLive:d.goLive,asOf:d.asOf,summary:d.summary,reviewRisks:d.reviewRisks,updatedAt:Date.now(),updatedBy:ME.name};p.status=d.status;p.target=d.goLive||null;const snapshot=window.ProjectReport.createReportSnapshot(p,TASKS,{reviewedBy:ME.name,lead:user(p.lead).name});p.reportSnapshots=[...(p.reportSnapshots||[]),snapshot];S.reportSnapshotId=snapshot.id;await workspace.flush();f.dataset.reportDirty='false';mclose();S.tab='status';renderAll();$('#main').scrollTop=0;toast('Reviewed report saved.');}
+  catch(error){button.disabled=false;button.textContent='Retry saving reviewed report';toast('Could not save the report. Your draft is retained.');}return;
  }
  if(kind==='statusreport'){
    try{const p=proj(S.pid);const report=window.ProjectReport.readEditor(f);p.statusReport={...report,updatedAt:Date.now(),updatedBy:ME.name};p.status=report.status;p.target=report.goLive||null;mclose();renderAll();toast('Status report updated. Saving to workspace…');}
@@ -822,7 +884,7 @@ workspace.onProfileChange(()=>{
 workspace.watch({
  snapshot:()=>({projects:PROJECTS,tasks:TASKS}),
  hydrate:state=>hydrate(state,workspace.members),
- isEditing:()=>['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)||!!S.open||$('#modal').classList.contains('on')
+ isEditing:()=>!!document.querySelector('form[data-form="deliveryrecords"],form[data-form="reportreview"]')||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)||!!S.open||$('#modal').classList.contains('on')
 });
 })().catch(error=>window.Workbench.fail(error));
 </script>

@@ -107,3 +107,17 @@ A conflicting database version stops the save rather than overwriting newer chan
 ## License
 
 See [LICENSE](LICENSE).
+
+## Reviewed reporting workflow
+
+Use **Status report → Prepare update** to update source records, review the
+narrative/status, and save a dated report. Record saves and reviewed-report saves
+wait for database acknowledgement. Unfinished report forms are protected when
+navigating away.
+
+Reviewed reports store an immutable copy of their figures, narrative, milestone
+information and reviewer metadata in the existing versioned workspace document.
+The history selector previews older reviews; PDF exports use the selected review.
+If source records change, the dashboard flags the difference and preserves the
+previous reviewed report until you prepare a new one. Draft exports are labeled
+DRAFT. Testing can be marked not applicable, independently of missing test data.
