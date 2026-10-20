@@ -1,11 +1,34 @@
-node_modules/
+# Dependencies and generated builds
+node_modules
 dist/
-.vercel/
-.env*
-!.env.example
-*.log
-.vercel
+coverage/
+*.tsbuildinfo
 
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+.vercel/
+supabase/.temp/
+supabase/.branches/
+*.pem
+*.key
+
+# Local previews, exports, and deployment metadata
 output/
 tmp/
 deployment.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

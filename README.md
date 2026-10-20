@@ -1,109 +1,109 @@
 # waku
 
-Personal project tracking at https://the-waku.vercel.app.
+A shared project workspace for tasks, delivery tracking, and supervisor-ready status reports.
 
-## Login
+**Live app:** [the-waku.vercel.app](https://the-waku.vercel.app/)
 
-The platform uses one username: `wakuwaku`. There is no public registration screen
-or email-link sign-in. The password is selected privately using a one-time setup
-page. No password or setup token belongs in source control or deployment metadata.
+## Features
 
-A Supabase Edge Function (`waaku-account`) maps this username to the existing
-owner's Auth user ID. It checks passwords through Supabase Auth and returns a
-normal Supabase session. Password hashing remains in Supabase Auth. The server-only
-service key is provided by the Edge Function runtime and never goes to the browser.
-The app keeps the owner's existing ID, projects, tasks and assignments.
+- Projects, task lists, boards, assignments, deadlines, and blockers.
+- A shared username/password login with selectable display profiles.
+- Project delivery records for milestones, test cases, decisions, and environment notes.
+- Status dashboards linked to project tasks and delivery records.
+- Generated report drafts for review and landscape PDF exports.
+- Day and night modes with a saved browser preference.
+- Shared database persistence with version checks to prevent conflicting saves.
 
-The private `waaku_account` table has RLS and no anonymous/authenticated table grants.
-Database membership checks additionally require the configured account ID. Previous
-email invitations no longer grant access to other accounts. After login, choose a display profile. Sarah and Wallace are included, and anyone
-using the shared login can create more profiles. Profiles share the same access;
-they are display identities, not separate password-protected accounts.
+## Stack
 
-Password setup uses a 256-bit random token, stores only its SHA-256 digest server
-side, expires after 24 hours, and claims it atomically before changing the password.
-The fragment is removed from the address bar after loading. Setup never sends email.
-If the setup link expires or a password is forgotten, the owner must issue a new
-setup token through privileged project administration. Do not enable public reset
-or account provisioning endpoints.
+Vanilla JavaScript and CSS, esbuild, Supabase Auth/Postgres/Edge Functions, jsPDF, and Vercel static hosting. Python serves the local preview only.
 
-## Development and deployment
+## Local setup
 
-Requires Node.js 22+; Python 3 is used only for local preview.
+Requirements: **Node.js 22+**, npm, Python 3, and a configured Supabase project.
 
 ```sh
+git clone https://github.com/sarahshahrir/waku.git
+cd waku
 npm ci
+cp .env.example .env
+```
+
+Edit `.env` with your Supabase project settings:
+
+```dotenv
+SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+SUPABASE_PUBLISHABLE_KEY=sb_publishable_REPLACE_ME
+```
+
+Use a **publishable** key. Environment files are ignored; `.env.example` is safe to commit. Secret/service-role keys belong only on the server.
+
+```sh
 npm test
 npm run build
 npm run dev
 ```
 
-Local `.env` supplies `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`. Only a public
-`sb_publishable_` key is allowed in the browser build. Do not commit `.env` or service
-keys. Vercel has these public build settings configured already.
+Open [127.0.0.1:4173](http://127.0.0.1:4173). This is a static preview: rebuild and refresh after changing source files. Authentication needs the configured Supabase backend.
 
-Vercel project: `prj_XRoBW3UyqrSTi6b14DyoIRI4w8fy`.
-Team: `team_gXWF4i8aN5sFbnnt4dohgVnY`.
-Supabase project: `mpmtophybbezghllzdmz` (Singapore).
+## Backend setup
 
-The old `workbench-lemon.vercel.app` domain has a permanent redirect to
-`the-waku.vercel.app`. Keep that project-domain redirect configured in Vercel.
-The production sign-in origin is `https://the-waku.vercel.app`; the Edge Function
-also permits `http://127.0.0.1:4173` for development. Other origins are rejected.
+The `supabase/` directory contains SQL templates and the `waaku-account` Edge Function. The legacy `waaku` identifiers are internal names retained for compatibility; the platform is named **waku**.
 
-The Supabase function source is in `supabase/functions/waaku-account/index.ts`.
-Deploy it with gateway JWT verification disabled because the function performs its
-own password/setup-token authentication. Its only actions are login and the
-single-use setup flow. It does not provide a registration endpoint.
+For a **new** Supabase project:
 
-Initial SQL source is retained under `supabase/`; those migrations are already
-applied. Do not rerun initial table-creation SQL against this project.
+1. Review `schema.sql`, `invitations.sql`, `single-account.sql`, and `profiles.sql` in that order. Replace example email addresses before applying them.
+2. Provision the owner in Supabase Auth and ensure its membership/account mapping is populated. The account SQL looks up the owner's existing Auth user; it does not create one.
+3. Deploy `supabase/functions/waaku-account/index.ts` as `waaku-account`, with gateway JWT verification disabled. The function performs its own login and one-time setup-token checks.
+4. Update the function's allowed origins for your deployment. The current source permits production and `http://127.0.0.1:4173`.
+5. Issue a private, expiring, single-use password setup token through privileged administration. Only its SHA-256 hash belongs in the database; never commit the token or password.
 
-## Project status reports
+These initial SQL templates have already been applied to the live workspace. **Do not rerun table-creation scripts on the existing production database.** Review and apply incremental changes separately.
 
-Open a project → **Status report** → **Edit status report**. Record status, report
-and go-live dates, summaries, delivery stages, testing counts, decisions, and notes.
-Saving also updates the project's status and target date. Reports persist in the
-existing shared workspace document; no additional reporting tables are needed.
+The shared username is `wakuwaku`. Password verification and hashing use Supabase Auth. There is no public registration or public password-reset endpoint. Display profiles share workspace access; they are not separate authentication accounts.
 
-**Download PDF** waits for the workspace save and downloads a landscape report.
-Long tables/notes continue onto numbered pages. Testing execution is (pass + fail)
-/ total, including blocked/remaining in total. Overall status is manually assessed.
+## Using connected reports
 
-## Saving and verification
+1. Create a project and maintain its tasks, deadlines, and blocked reasons.
+2. Open **Project → Delivery records** to maintain milestones, test results, decisions, and architecture/environment details. Click **Save delivery records**.
+3. Open **Status report**. Its timeline and next steps use project tasks; testing, decisions, and notes use delivery records once enabled.
+4. Select **Generate report draft**, review the summary, dates, and overall status, then save.
+5. Select **Download PDF** to export the connected report after pending changes save.
 
-Shared state uses atomic version checks. Conflicts cannot overwrite a newer save;
-download the unsaved draft and manually reapply after reloading. Idle browsers check
-for updates every 1.5 seconds, deferring refresh while a form or drawer is open.
+Legacy manual testing counts remain in saved project data, but saving delivery records switches the dashboard to test-case results. Testing execution is `(passed + failed) / total`; blocked and remaining cases count toward the total. Readiness and sign-off require human assessment. A saved executive summary is a reviewed snapshot; regenerate it when you want a new draft.
 
-The local test suite covers empty pages, project choices, report calculations,
-long PDFs, save acknowledgement, conflict handling and in-flight edits. Live checks
-confirm incorrect usernames and invalid setup tokens are rejected. Successful
-password login still needs to be verified after the owner sets the password.
+Use the bottom sidebar to access **Settings**, **Profile**, **Switch profile**, and **Sign out**. Theme settings are also available under **Settings → Appearance**.
 
+## Deployment
 
-## Display profiles
+Import this repository into Vercel and configure these build environment variables:
 
-After login (including a page reload), choose Sarah, Wallace, or **Create a profile**.
-A new profile needs a unique name and can include a role/title. Profiles are stored
-separately in `waaku_profiles`, so adding one does not overwrite project data.
-Use **Switch profile** beside the connection status to choose another person without
-logging out. Pending workspace changes must save before switching.
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
 
-Task creation, comments, assignments, project leads and report updates use the
-selected display profile. Existing Sarah assignments retain their original IDs.
-Profiles do not create separate workspaces or permission boundaries. All people
-with the shared login can choose any profile; activity names are coordination
-labels, not verified personal identities.
+`vercel.json` sets the build command to `npm run build`, output to `dist`, and security headers. Deploy the Supabase Edge Function separately; Vercel does not deploy it. When using a different hostname, review the legacy hostname redirect and update allowed auth origins.
 
-## Connected project reporting
+## Project structure
 
-Project → Delivery records maintains test cases/results, milestones, decisions,
-and architecture/environment notes in the existing versioned workspace JSON.
-Status dashboards and PDFs derive next steps, blockers and task timeline entries
-from the project's task list, plus delivery records when enabled. Legacy manual
-test counts remain available until delivery records are first saved. Generating
-a report draft opens a review form; it does not automatically approve readiness
-or overwrite the saved summary. Report status remains a human assessment.
+```text
+src/
+  index.html          Interface, styles, and app behavior
+  backend.mjs         Authentication, profile selection, database integration
+  profiles.mjs        Profile picker and creation validation
+  sync.mjs            Versioned workspace synchronization
+  project-report.mjs  Delivery records, report derivation, drafts, PDF export
+scripts/build.mjs     Static production build
+supabase/             Database SQL and authentication Edge Function
+tests/                Interface, profile, reporting, and sync tests
+vercel.json           Hosting configuration and response headers
+```
 
-Before applying the SQL templates to a new Supabase project, replace the example owner and teammate email addresses with your own. Production environment files and deployment metadata are intentionally excluded from this repository.
+## Verification and saving
+
+Run `npm test` for interface rendering, profile validation, linked reporting calculations, PDF pagination, and synchronization checks. Run `npm run build` to verify script syntax and produce deployment assets.
+
+A conflicting database version stops the save rather than overwriting newer changes. If prompted, download the unsaved draft and reconcile it with the latest workspace. Local drafts, generated exports, credentials, and deployment metadata are excluded by `.gitignore`.
+
+## License
+
+See [LICENSE](LICENSE).
