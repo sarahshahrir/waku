@@ -1,0 +1,11 @@
+.env*
+.git/
+node_modules/
+dist/
+tests/
+supabase/
+deployment.json
+README.md
+
+tmp/
+output/
